@@ -1,0 +1,6 @@
+.footer{
+  grid-column: span 2; /* A segunda linha tem o tamanho de 2 colunas */
+  height: 5vh;
+  width: 100%;
+  background: rgb(245, 245, 245);
+}

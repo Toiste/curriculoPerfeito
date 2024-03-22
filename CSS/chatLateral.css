@@ -1,0 +1,16 @@
+.chat-lateral{
+  display: flex;
+  justify-content: center;
+  width: 20vw;
+  border: 1px solid black;
+  height: 95vh;
+}
+
+.chat-lateral-conversa{
+  height: 80px;
+  width: 50%;
+  border-radius: 20px 20px 20px 0;
+  background: black;
+  margin: 10px 0 0 0;
+  list-style-type: none;
+}
