@@ -1,0 +1,37 @@
+.modeloSimples{
+  position: absolute;
+  display: none;
+  left: 30%;
+  top: 10px;
+  width: 630px;
+  height: 897px;
+  background: #ffff;
+  z-index: 1;
+}
+
+.modeloSimples-curriculo h1{
+  font-family: "Calibri";
+  padding-bottom: 25px;
+}
+
+.modeloSimples-curriculo h2{
+  font-family: "Calibri";
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.modeloSimples-curriculo p{
+  font-family: "Calibri";
+  font-weight: bold;
+  font-size: 15px;
+  padding-bottom: 15px;
+}
+.modeloSimples-curriculo{
+  width: 100%;
+  height: 100%;
+  padding: 80px 0 0 60px;
+}
+
+.modeloSimples-objetivo{
+  width: 490px;
+}
