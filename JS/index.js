@@ -1,8 +1,87 @@
-// Lógica do download do PDF
+const chatExibicao = document.querySelector(".modeloSimples-curriculo");
+const chatTexto = document.getElementById("chat-principal-texto");
+const formularioPadrao = document.getElementById("formulario-padrao")
+const formularioExperiencia = document.getElementById("formulario-experiencia");
 
-const envioTexto = document.querySelector(".chat-escrita");
-let etapaMensagem = 1;
-let mensagem = '';
+// dados Base.
+const nomeSobrenome = document.getElementById("nome-sobrenome");
+const numTelefone = document.getElementById("numero-telefone");
+const email = document.getElementById("email");
+
+// dados do endereço
+const bairro = document.getElementById("bairro");
+const cidade = document.getElementById("cidade");
+const estado = document.getElementById("estado");
+const cep = document.getElementById("cep");
+
+
+// Configurações do PDF
+const opcoes = {
+  margin: [0, 0, 0, 0],
+  filename: "arquivo.pdf",
+  html2canvas: { scale: 3 },
+  jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+}
+
+
+// Sem uso mas possivel ideia de implementação para preencher outros Curriculos.
+// Se for fazer, vai ter que estilizar pelas classes e identificar os Campos pelo ID.
+var curriculo = {
+  nomeSobrenome: "",
+  numTelefone: 0,
+  email: "",
+  bairro: "",
+  cidade: "",
+  estado: "",
+  cep: "",
+
+}
+console.log(curriculo.nomeSobrenome);
+
+function scrollDown() {
+  var container = document.querySelector(".chat-principal-exibicao");
+  container.scrollTop = container.scrollHeight;
+}
+
+
+// etapas do curriculo para alteralo pelo seu ID
+let etapaCurriculo = [nomeSobrenome, numTelefone, email, bairro, cidade, estado, cep]
+
+// etapa mensagem percorre as perguntas e o id das respostas ao mesmo tempo
+let etapaMensagem = 0;
+
+// lista de mensagens
+let mensagens = [
+  "Digite Seu nome Completo",
+  "Qual seu  Número de Telefone?, por exemplo 27 99999-9999",
+  "Qual seu endereço de email?",
+  "Digite o Seu Bairro",
+  "Digite Sua Cidade",
+  "Digite Seu Estado",
+  "Digite Seu Cep",
+  "Agora vamos para sua experiencia Profissional, Preencha os Campos"
+]
+
+// Adiciona a primeira Mensagem
+adicionarLi(mensagens[etapaMensagem]);
+
+function adicionaTexto(texto, elemento) {
+  const mensagem = document.createTextNode(texto);
+  elemento.appendChild(mensagem);
+}
+
+
+// a resposta do usuário e a tag que vai querer criar, por exemplo "p"
+function criarElementoCurriculo(resposta, tag, elemento) {
+  const novoElemento = document.createElement(tag);
+
+  // Adiciona a resposta ao elemento
+  adicionaTexto(resposta, novoElemento);
+
+  // Adciona o elemento ao Curriculo
+  elemento.appendChild(novoElemento);
+
+}
 
 function adicionarLi(texto) {
   // Cria um elemento <li>
@@ -24,50 +103,45 @@ function adicionarLi(texto) {
 }
 
 
-envioTexto.addEventListener("submit", () => {
+// Funcionamento do Formulário Padrão.
+formularioPadrao.addEventListener("submit", () => {
   event.preventDefault()
 
-  const chatExibicao = document.querySelector(".modeloSimples-curriculo");
-  const chatTexto = document.getElementById("chat-principal-texto");
 
-  // Adiciona um novo balão de texto
-  adicionarLi(chatTexto.value);
-
-  chatTexto.value = '';
-
-  // Configurações do PDF
-  const opcoes = {
-    margin: [0, 0, 0, 0],
-    filename: "arquivo.pdf",
-    html2canvas: { scale: 3 },
-    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
-  }
-
-  // Gerar e baixar o PDF
-  //html2pdf().set(opcoes).from(chatExibicao).save();
 
   // Lógica do Chat.
 
-  switch (etapaMensagem) {
+  // Adiciona o Texto ao chat
+  adicionarLi(chatTexto.value);
 
-    case 1: mensagem = "Qual Sua Idade?, Digite Apenas o Número Namoral";
-      break;
+  //Adiciona o Texto ao curriculo
+  adicionaTexto(chatTexto.value, etapaCurriculo[etapaMensagem])
 
-    case 2: mensagem = "Qual seu  Phone Number?, por exemplo 27 99999-9999 ";
-      break;
-
-    case 3: mensagem = "Onde tu mora?, Digita teu Estado, exemplo Espirito Santo";
-      break;
-
-    default:
-      mensagem = "é isso por enquanto seu cracudo";
-      break;
-
-  }
+  chatTexto.value = "";
   etapaMensagem += 1;
 
-  adicionarLi(mensagem);
+  //envia texto da assistente
+  adicionarLi(mensagens[etapaMensagem]);
 
+  // Troca o Forms Para o de Experiencias Profissionais
+  if (etapaMensagem == 7) {
+    formularioPadrao.style.display = "none";
+    formularioExperiencia.style.display = "flex";
+  }
+
+
+  scrollDown()
 
 })
+
+
+// Tem que criar a lógica ainda, Formulário de Experiência.
+formularioExperiencia.addEventListener("submit", () => {
+  event.preventDefault()
+
+  const experiencia = document.getElementById("experiencia-profissional")
+
+  scrollDown()
+
+});
 

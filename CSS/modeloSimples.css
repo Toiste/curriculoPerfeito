@@ -1,7 +1,8 @@
 .modeloSimples{
   position: absolute;
-  display: none;
-  left: 30%;
+  /* display: none; */
+  /* left: 30%; */
+  right: 200px;
   top: 10px;
   width: 630px;
   height: 897px;
@@ -32,6 +33,15 @@
   padding: 80px 0 0 60px;
 }
 
-.modeloSimples-objetivo{
+.objetivo{
   width: 490px;
+}
+
+.flex{
+  display: flex;
+}
+
+.espaco{
+  margin-left: 5px;
+  margin-right: 5px;
 }

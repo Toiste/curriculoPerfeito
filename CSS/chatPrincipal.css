@@ -6,22 +6,24 @@
   align-items: center;
   flex-direction: column;
   background: rgb(66, 180, 255);
-  height: 95vh;
-  width: 80vw;
+  height: 97vh;
+  width: 50vw;
   padding: 0 0 10px 0;
 }
 .chat-principal-exibicao{
-  width: 70%;
-  height: 95%;
- }
+  width: 50vw;
+  height: 97vh;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
 
 .chat-principal-conversa{
   display: flex;
   flex-direction: column;
   justify-content: end;
   list-style-type: none;
-  width: 100%;
-  height: 100%;
+  width: 49vw;
+  min-height: 90vh;
 }
 .chat-principal-conversa li{
   display: flex;
@@ -31,14 +33,17 @@
 }
 
 .chat-principal-conversa li p{
+  font-size: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 400px;
+  min-width: 400px;
   height: 100%;
   text-align: center;
   background: #ffff;
   border-radius: 20px;
+  padding: 5px 5px 5px 5px;
+  margin: 20px 140px 50px 140px;
 }
 
 .chat-principal-conversa li:nth-child(odd){
@@ -59,12 +64,19 @@
   border-radius: 20px 20px 20px 0px;
 }
 
-
-.chat-escrita{
-display: flex;
-justify-content: center;
-width: 100%;
-height: 5%;
+#formulario-padrao{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 5%;
+  margin: 0px 0px 10px 0px;
+}
+#formulario-experiencia{
+  display: none;
+  justify-content: center;
+  width: 100%;
+  height: 5%;
+  margin: 0px 0px 10px 0px;
 }
 
 
@@ -73,8 +85,8 @@ height: 5%;
   background: rgb(235, 235, 235);
   border-radius: 10px 10px 10px 10px;
   font-size: 20px;
-  width: 900px;
-  height: 100%;
+  width: 420px;
+  height: 35px;
   margin: 0px 10px 0px 0px;
 }
 #chat-principal-texto:hover{
@@ -86,16 +98,16 @@ height: 5%;
 
 #chat-principal-button{
   border-radius: 10px;
-  height: 100%;
-  width: 200px;
+  height: 35px;
+  width: 150px;
 }
 
 .icone-usuario{
   position: absolute;
   left: 3%;
   bottom: 12%;
-  height: 120px;
-  width: 120px;
+  height: 100px;
+  width: 100px;
   background: gray ;
   border-radius: 50%;
 }
@@ -105,8 +117,8 @@ height: 5%;
   position: absolute;
   right: 3%;
   bottom: 12%;
-  height: 120px;
-  width: 120px;
+  height: 100px;
+  width: 100px;
   background: gray ;
   border-radius: 50%;
 }
