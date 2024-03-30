@@ -56,12 +56,59 @@
       <button type="submit" id="chat-principal-button">enviar</button>
     </form>
     <form id="formulario-experiencia">
-      <input type="text" id="chat-escrita-cargo">
-      <input type="text" id="chat-escrita-empresa" >
-      <input type="text" id="chat-escrita-inicio" >
-      <input type="text" id="chat-escrita-fim" >
-      <button type="submit" id="chat-principal-button-adicionar">Adicionar</button>
-      <button type="submit" id="chat-principal-button-avancar">Próxima Pergunta</button>
+      <div id="div-experiencia-cargo" class="div-input-experiencia">
+        <label for="chat-escrita-cargo">Função</label>
+        <input type="text" id="chat-escrita-cargo">
+      </div>
+      <div class="div-input-experiencia">
+        <label for="chat-escrita-empresa">Empresa</label>
+        <input type="text" id="chat-escrita-empresa" >
+      </div>
+      <div class="div-input-experiencia-data">
+        <label for="chat-escrita-inicio-mes">Data de início</label>
+        <select name="meses-inicio" id="chat-escrita-inicio-mes" >
+          <option value="janeiro">janeiro</option>
+          <option value="fevereiro">fevereiro</option>
+          <option value="março">março</option>
+          <option value="abril">abril</option>
+          <option value="junho">junho</option>
+          <option value="julho">julho</option>
+          <option value="agosto">agosto</option>
+          <option value="setembro">setembro</option>
+          <option value="outubro">outubro</option>
+          <option value="novembro">novembro</option>
+          <option value="dezembro">dezembro</option>
+
+        </select>
+        <select name="2024" id="chat-escrita-inicio-ano"></select>
+      </div>
+      <div class="div-input-experiencia-data">
+        <label for="chat-escrita-fim-mes">Data de término</label>
+        <select name="meses-fim" type="radio" id="chat-escrita-fim-mes" >
+          <option value="janeiro">janeiro</option>
+          <option value="fevereiro">fevereiro</option>
+          <option value="março">março</option>
+          <option value="abril">abril</option>
+          <option value="junho">junho</option>
+          <option value="julho">julho</option>
+          <option value="agosto">agosto</option>
+          <option value="setembro">setembro</option>
+          <option value="outubro">outubro</option>
+          <option value="novembro">novembro</option>
+          <option value="dezembro">dezembro</option>
+
+        </select>
+        <select name="2024" id="chat-escrita-fim-ano"></select>
+      </div>
+      <div class="div-descricao-experiencia">
+        <label for="descricao-currilo">Descricao</label>
+        <textarea name="descricao curriculo" id="descricao-currilo" cols="5" rows="5"></textarea>
+      </div>
+      <div id="div-buttons-experiencia" class="div-input-experiencia">
+        <button type="button" id="chat-principal-button-adicionar">Adicionar</button>
+        <button type="button" id="chat-principal-button-avancar">Próxima Pergunta</button>
+      </div>
+      
     </form>
   </div>
   <div class="chat-lateral">

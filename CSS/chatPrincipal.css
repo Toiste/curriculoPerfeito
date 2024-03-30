@@ -23,8 +23,12 @@
   justify-content: end;
   list-style-type: none;
   width: 49vw;
-  min-height: 90vh;
+  /* min heigh é a altura que os elementos li vão estar */
+  min-height: 82vh;
+  /* margin bottom é a altura que vão estar após o tamanho da ol ultrapassar o tamanho do chat */
+  margin-bottom: 80px;
 }
+
 .chat-principal-conversa li{
   display: flex;
   width: 100%;
@@ -47,21 +51,21 @@
 }
 
 .chat-principal-conversa li:nth-child(odd){
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 /* Aplicar css de 2 em 2 mensagens, equivalentes a resposta do usuário */
 .chat-principal-conversa li:nth-child(even){
   color: green;
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 
 .chat-principal-conversa li:nth-child(odd) p{
-  border-radius: 20px 20px 0 20px;
+  border-radius: 20px 20px 20px 0px;
 }
 
-.chat-principal-conversa li:nth-child(even) p{
-  border-radius: 20px 20px 20px 0px;
+.chat-principal-conversa li:nth-child(even) p{  
+  border-radius: 20px 20px 0 20px;
 }
 
 #formulario-padrao{
@@ -71,15 +75,72 @@
   height: 5%;
   margin: 0px 0px 10px 0px;
 }
+
 #formulario-experiencia{
   display: none;
-  justify-content: center;
-  width: 100%;
-  height: 5%;
+  grid-template-columns: auto auto; /* 2 colunas */
+  grid-template-rows: auto auto; /* 2 linhas */
+  justify-content: space-around;
+  align-items: center;
+  width: 700px;
+  height: 700px;
   margin: 0px 0px 10px 0px;
+  padding: 15px;
+  background: rgb(201, 201, 201);
+}
+
+.div-descricao-experiencia{
+  grid-column: span 2;
+}
+
+#descricao-currilo{
+  font-size: 15px;
+  width: 100%;
 }
 
 
+.div-input-experiencia{
+ height: 40px;
+ width: 250px;
+}
+
+.div-input-experiencia-data{
+  height: 40px;
+  width: 250px;
+}
+
+.div-input-experiencia-data input{
+  width: 40px;
+  font-size: 15px;
+  height: 40px;
+}
+
+.div-input-experiencia input{
+  width: 100%;
+  font-size: 15px;
+  height: 40px;
+}
+
+.div-input-experiencia button{
+  width: 150px;
+  height: 30px;
+
+}
+
+#chat-principal-button-adicionar{
+  background: rgb(25, 182, 25);
+}
+
+#chat-principal-button-avancar{
+  background: rgb(68, 149, 255);
+}
+
+#div-buttons-experiencia{
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  grid-column: span 2;
+}
 
 #chat-principal-texto{
   background: rgb(235, 235, 235);
@@ -95,6 +156,7 @@
 #chat-principal-texto:focus{
   background: white;
 }
+
 
 #chat-principal-button{
   border-radius: 10px;
