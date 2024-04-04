@@ -5,6 +5,7 @@ const formularioPadrao = document.getElementById("formulario-padrao")
 // Formulario Experiencia
 const formularioExperiencia = document.getElementById("formulario-experiencia");
 const botaoAdicionarExperiencia = document.getElementById("chat-principal-button-adicionar");
+const botaoAvancarExperiencia = document.getElementById("chat-principal-button-avancar");
 
 // dados Base.
 const nomeSobrenome = document.getElementById("nome-sobrenome");
@@ -19,6 +20,7 @@ const cep = document.getElementById("cep");
 
 // dados Experiencia
 const experiencia = document.getElementById("experiencia-profissional");
+const experiencias = document.querySelectorAll("#experiencia-profissional p")
 // inputs Experiencia
 const cargo = document.getElementById("chat-escrita-cargo");
 const empresa = document.getElementById("chat-escrita-empresa");
@@ -27,6 +29,40 @@ const inicioAno = document.getElementById("chat-escrita-inicio-ano");
 const fimMes = document.getElementById("chat-escrita-fim-mes");
 const fimAno = document.getElementById("chat-escrita-fim-ano")
 const descricao = document.getElementById("descricao-currilo")
+
+// Formulario Habiliades
+const formularioHabilidades = document.getElementById("formulario-habilidades");
+
+//dados Habilidades
+const habilidades = document.querySelectorAll(".habilidades p");
+const habilidadesModelo = document.getElementById("habilidades");
+
+//Input Habilidades
+const inputHabilidades = document.getElementById("formulario-habilidades-input-envio");
+
+//button Habilidades
+const buttonHabilidades = document.getElementById("formulario-habilidades-button");
+const buttonAvancarHabilidades = document.getElementById("formulario-habilidades-button-avancar");
+
+// Formulario formacao
+const formularioFormacao = document.getElementById("formulario-formacao")
+
+// dados Formacao
+const formacao = document.querySelectorAll(".formacao p")
+const formacaoModelo = document.getElementById("formacao");
+
+// input formacao
+const inputFormacao = document.getElementById("formulario-formacao-input-envio");
+
+// select formacao
+const selectEstado = document.getElementById("estado-formacao");
+
+
+
+// Variaveis de controle
+let experienciasAdicionadas = 0;
+let habilidadesAdicionadas = 0
+let formacaoAdicionadas = 0
 
 // Configurações do PDF
 const opcoes = {
@@ -39,17 +75,184 @@ const opcoes = {
 
 // Sem uso mas possivel ideia de implementação para preencher outros Curriculos.
 // Se for fazer, vai ter que estilizar pelas classes e identificar os Campos pelo ID.
-let curriculo = {
-  nomeSobrenome: "oi",
-  numTelefone: "",
-  email: "",
-  bairro: "",
-  cidade: "",
-  estado: "",
-  cep: "",
-  experiencia: [],
+class Curriculo {
+  constructor() {
+    this.nomeSobrenome = "";
+    this.numTelefone = "";
+    this.email = "";
+    this.bairro = "";
+    this.cidade = "";
+    this.estado = "";
+    this.cep = "";
+    this.experiencia = [];
+    this.habilidade = [];
+    this.formacao = [];
+  }
+
+  getNomeSobrenome() {
+    return this.nomeSobrenome
+  }
+
+  setNomeSobrenome(novoNomeSobrenome) {
+    this.nomeSobrenome = novoNomeSobrenome
+  }
+
+  getnumTelefone() {
+    return this.numTelefone
+  }
+
+  setNumTelefone(novonumTelefone) {
+    this.numTelefone = novonumTelefone
+  }
+
+  getEmail() {
+    return this.email
+  }
+
+  setEmail(novoEmail) {
+    this.email = novoEmail
+  }
+
+  getbairro() {
+    return this.bairro
+  }
+
+  setBairro(novoBairro) {
+    this.bairro = novoBairro
+  }
+
+  getCidade() {
+    return this.cidade
+  }
+
+  setCidade(novaCidade) {
+    this.cidade = novaCidade
+  }
+
+  getEstado() {
+    return this.estado
+  }
+
+  setEstado(novoEstado) {
+    this.estado = novoEstado
+  }
+
+  getCep() {
+    return this.cep
+  }
+
+  setCep(novoCep) {
+    this.cep = novoCep
+  }
+
+  addExperiencia(cargo, empresa, descricao, mesInicio, anoInicio, mesFim, anoFim) {
+    const novaExperiencia = new Experiencia(cargo, empresa, descricao, mesInicio, anoInicio, mesFim, anoFim);
+    this.experiencia.push(novaExperiencia)
+  }
+
+  getExperiencia(indice) {
+    return this.experiencia[indice]
+  }
+
+  removeExperiencia(indice) {
+    this.experiencia.splice(indice, 1)
+  }
+
+  addHabilidade(habilidade) {
+    this.habilidade.push(habilidade);
+  }
+
+  getHabilidade(indice) {
+    return this.habilidade[indice]
+  }
+
+  setHabilidade(indice, habilidade) {
+    this.habilidade[indice] = habilidade
+  }
+
+  removeHabilidade(indice) {
+    this.habilidade.splice(indice, 1)
+  }
+
 
 }
+
+class Experiencia {
+  constructor(cargo, empresa, descricao, mesInicio, anoInicio, mesFim, anoFim) {
+    this.cargo = cargo;
+    this.empresa = empresa;
+    this.descricao = descricao
+    this.periodo = [mesInicio, anoInicio, mesFim, anoFim];
+  }
+
+  getCargo() {
+    return this.cargo
+  }
+
+  setCargo(cargo) {
+    this.cargo = cargo
+  }
+
+  getEmpresa() {
+    return this.Empresa
+  }
+
+  setEmpresa(empresa) {
+    this.empresa = empresa
+  }
+
+  getDescricao() {
+    return this.descricao
+  }
+
+  setDescricao(descricao) {
+    this.descricao = descricao
+  }
+
+  getMesInicio() {
+    return this.periodo[0]
+  }
+
+  setMesInicio(mesInicio) {
+    this.periodo[0] = mesInicio;
+  }
+
+  getAnoInicio() {
+    return this.periodo[1]
+  }
+
+  setAnoInicio(anoInicio) {
+    this.periodo[1] = anoInicio
+  }
+
+  getMesFim() {
+    return this.periodo[2]
+  }
+
+  setMesFim(mesFim) {
+    this.periodo[2] = mesFim;
+  }
+
+  getAnoFim() {
+    return this.periodo[3]
+  }
+
+  setAnoFim(anoFim) {
+    this.periodo[3] = anoFim;
+  }
+}
+
+class Formacao {
+  constructor(formacao, estado) {
+    this.formacao = formacao;
+    this.estado = estado;
+  }
+}
+
+const cur = new Curriculo()
+cur.setNomeSobrenome("Marllon")
+cur.adicionarExperiencia("pastor", "acelor", "fazia de tudo lá", "setembro", 2004, "novembro", 2005)
+console.log(cur)
 
 // Mapeamento entre etapas do formulário e campos do currículo
 const camposCurriculo = [
@@ -59,7 +262,7 @@ const camposCurriculo = [
   "bairro",
   "cidade",
   "estado",
-  "cep"
+  "cep",
 ];
 
 // Obter o ano atual
@@ -87,17 +290,56 @@ for (let ano = anoAtual; ano >= anoAtual - limiteIdade; ano--) {
   fimAno.add(option);
 }
 
-function adicionarExperiencia() {
-  curriculo.experiencia.push({
+function adicionarExperiencia(object) {
+  object.experiencia.push({
     funcao: cargo.value,
     empresa: empresa.value,
     data_inicio: [inicioMes.value, inicioAno.value],
     data_fim: [fimMes.value, fimAno.value],
     descricao: descricao.value,
   })
-  console.log(curriculo.experiencia[0])
 }
 
+function adicionarExperienciaModelo(object) {
+  // a partir da quantidade já adicionada de experiencias ele adiciona as restantes
+  for (experienciasAdicionadas; experienciasAdicionadas < object.experiencia.length; experienciasAdicionadas++) {
+    let novaExperiencia = document.createElement("p");
+    novaExperiencia.textContent = object.experiencia[experienciasAdicionadas].funcao + " , " + object.experiencia[experienciasAdicionadas].empresa +
+      " - ( " + object.experiencia[experienciasAdicionadas].data_inicio[0] + " " + object.experiencia[experienciasAdicionadas].data_inicio[1] + " / " + object.experiencia[experienciasAdicionadas].data_fim[0] + " " +
+      object.experiencia[experienciasAdicionadas].data_fim[1] + " )"
+
+    experiencia.appendChild(novaExperiencia);
+  }
+}
+
+function adicionarHabilidades(object) {
+  object.habilidades.push(inputHabilidades.value)
+}
+
+function adicionarHabilidadesModelo(object) {
+  for (habilidadesAdicionadas; habilidadesAdicionadas < object.habilidades.length; habilidadesAdicionadas++) {
+    let novaHabilidade = document.createElement("p");
+    novaHabilidade.textContent = object.habilidades[habilidadesAdicionadas]
+    console.log("cheguei aqui")
+    habilidadesModelo.appendChild(novaHabilidade);
+  }
+}
+
+function adicionarFormacao(object) {
+  object.formacao.push({
+    formacao: inputFormacao.value,
+    estado: selectEstado.value,
+  });
+}
+
+function adicionarFormacaoModelo(object) {
+  for (formacaoAdicionadas; formacaoAdicionadas < object.formacao.length; formacaoAdicionadas++) {
+    let novaFormacao = document.createElement("p");
+    novaFormacao.textContent = object.formacao[formacaoAdicionadas].formacao + " - " + object.formacao[formacaoAdicionadas].estado
+    formacaoModelo.appendChild(novaFormacao);
+
+  }
+}
 function scrollDown() {
   var container = document.querySelector(".chat-principal-exibicao");
   container.scrollTop = container.scrollHeight;
@@ -134,19 +376,20 @@ function atualizarCurriculo(object) {
   cep.textContent = object.cep;
 
   if (object.experiencia.length > 0) {
-
-
-    //ele só está criando e não atualiziando os dados, A solução é criar um variavel que conta quantos criados existem, ai você atualiza os criados
-    // e cria os que faltam
-    for (let i = 0; i < object.experiencia.length; i++) {
-      let novaExperiencia = document.createElement("p");
-      novaExperiencia.textContent = object.experiencia[i].funcao + " , " + object.experiencia[i].empresa +
+    let i = 0
+    experiencias.forEach(elemento => {
+      elemento.textContent = object.experiencia[i].funcao + " , " + object.experiencia[i].empresa +
         " - ( " + object.experiencia[i].data_inicio[0] + " " + object.experiencia[i].data_inicio[1] + " / " + object.experiencia[i].data_fim[0] + " " +
         object.experiencia[i].data_fim[1] + " )"
-
-      experiencia.appendChild(novaExperiencia);
-    }
-
+      i++
+    });
+  }
+  if (object.habilidades.length > 0) {
+    let i = 0
+    habilidades.forEach(elemento => {
+      elemento.textContent = object.habilidades[i]
+      i++
+    });
   }
 
 }
@@ -226,10 +469,59 @@ formularioPadrao.addEventListener("submit", () => {
 botaoAdicionarExperiencia.addEventListener("click", () => {
   event.preventDefault()
 
-  adicionarExperiencia()
-  atualizarCurriculo(curriculo)
+  adicionarExperiencia(curriculo)
+  adicionarExperienciaModelo(curriculo)
+  atualizarCurriculo(curriculo) // talvez n precise estar aqui
+
+  adicionarLi("funcao: " + cargo.value + " empresa: " + empresa.value + " descricao: " + descricao.value);
+  adicionarLi("otimo tem mais alguma experiencia para adicionar?")
+
+  cargo.value = "";
+  empresa.value = "";
+  descricao.value = "";
 
   scrollDown()
 
 });
 
+botaoAvancarExperiencia.addEventListener("click", () => {
+  adicionarLi("adicione uma habilidade");
+  formularioExperiencia.style.display = "none";
+  formularioFormacao.style.display = "flex";
+
+})
+
+formularioHabilidades.addEventListener("submit", () => {
+  event.preventDefault()
+
+  // Adiciona o Texto ao chat
+  adicionarLi(inputHabilidades.value);
+
+  adicionarHabilidades(curriculo)
+  adicionarHabilidadesModelo(curriculo)
+  atualizarCurriculo(curriculo) // talvez n precise estar aqui
+
+  adicionarLi("tem mais alguma habilidade?")
+  console.log(curriculo)
+
+  scrollDown()
+})
+
+buttonAvancarHabilidades.addEventListener("click", () => {
+  // Adiciona o Texto ao chat
+  adicionarLi("digite uma formacao");
+  formularioHabilidades.style.display = "none";
+  formularioFormacao.style.display = "none";
+
+})
+
+formularioFormacao.addEventListener("submit", () => {
+  event.preventDefault()
+
+  adicionarFormacao(curriculo)
+  adicionarFormacaoModelo(curriculo)
+  adicionarLi(inputFormacao.value + " " + selectEstado.value);
+  adicionarLi("adicione mais uma formacao");
+
+  scrollDown()
+})

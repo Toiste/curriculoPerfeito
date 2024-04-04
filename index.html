@@ -27,16 +27,13 @@
       </div>
       <div id="experiencia-profissional">
         <h2>Experiência Profissional</h2>
-        <p>Estoquista , Via mia - ( Setembro 2022/ Janeiro 2023 ) </p>
       </div>
-      <div id="habilidades-formacao">
-      <h2>Habilidades e Formação</h2>
-      <p>Ensino médio – Completo.</p>
-      <p>Familiaridade em programas microsoft</p>
-      <p>Comunicativo</p>
-      <p>Resiliência profissional</p>
-      <p>Pontual Organizado</p>
+      <div id="formacao" class="formacao">
+        <h2>Habilidades e Formação</h2>
       </div>
+      <div id="habilidades" class="habilidades">
+      </div>
+      
       
       <h2>Objetivo</h2>
       <p class="objetivo">Desejo uma oportunidade de inserção no mercado de trabalho, onde possa desenvolver minhas habilidades
@@ -51,9 +48,9 @@
       <ol class="chat-principal-conversa">
       </ol>
     </div>
-    <form id="formulario-padrao">
-      <input type="text" id="chat-principal-texto" placeholder="Responda a pergunta aqui">
-      <button type="submit" id="chat-principal-button">enviar</button>
+    <form id="formulario-padrao" class="formulario-simples">
+      <input type="text" id="chat-principal-texto" class="input-simples" placeholder="Responda a pergunta aqui">
+      <button type="submit" id="chat-principal-button" class="button-simples">enviar</button>
     </form>
     <form id="formulario-experiencia">
       <div id="div-experiencia-cargo" class="div-input-experiencia">
@@ -109,6 +106,21 @@
         <button type="button" id="chat-principal-button-avancar">Próxima Pergunta</button>
       </div>
       
+    </form>
+    <form id="formulario-habilidades" class="formulario-simples">
+      <input type="text" id="formulario-habilidades-input-envio" placeholder="Responda a pergunta aqui">
+      <button type="submit" id="formulario-habilidades-button" class="button-simples">enviar</button>
+      <button type="button" id="formulario-habilidades-button-avancar" class="button-simples">avançar</button>
+    </form>
+    <form id="formulario-formacao" class="formulario-simples">
+      <input type="text" id="formulario-formacao-input-envio" placeholder="Responda a pergunta aqui">
+      <select name="estado-formacao" id="estado-formacao">
+        <option value="incompleto">incompleto</option>
+        <option value="cursando">cursando</option>
+        <option value="completo">completo</option>
+      </select>
+      <button type="submit" id="formulario-formacao-button" class="button-simples">enviar</button>
+      <button type="button" id="formulario-formacao-button-avancar" class="button-simples">avançar</button>
     </form>
   </div>
   <div class="chat-lateral">
