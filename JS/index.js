@@ -250,9 +250,6 @@ class Formacao {
 }
 
 const cur = new Curriculo()
-cur.setNomeSobrenome("Marllon")
-cur.adicionarExperiencia("pastor", "acelor", "fazia de tudo lá", "setembro", 2004, "novembro", 2005)
-console.log(cur)
 
 // Mapeamento entre etapas do formulário e campos do currículo
 const camposCurriculo = [
@@ -357,11 +354,13 @@ let mensagens = [
   "Digite Sua Cidade",
   "Digite Seu Estado",
   "Digite Seu Cep",
-  "Agora vamos para sua experiencia Profissional, Preencha os Campos"
+  "Agora vamos para sua experiencia Profissional, Preencha os Campos",
+  "otimo tem mais alguma experiencia para adicionar?",
+  "E alguma Habilidade?"
 ]
 
 // Adiciona a primeira Mensagem
-adicionarLi(mensagens[etapaMensagem]);
+adicionarLiAssistente(mensagens[etapaMensagem]);
 
 
 // Modelo Curriculo
@@ -384,10 +383,10 @@ function atualizarCurriculo(object) {
       i++
     });
   }
-  if (object.habilidades.length > 0) {
+  if (object.habilidade.length > 0) {
     let i = 0
     habilidades.forEach(elemento => {
-      elemento.textContent = object.habilidades[i]
+      elemento.textContent = object.habilidade[i]
       i++
     });
   }
@@ -418,6 +417,31 @@ function adicionarLi(texto) {
   const novaLi = document.createElement('li');
   const novoP = document.createElement('p');
 
+  novaLi.classList.add("liUsuario")
+  novoP.classList.add("pUsuario")
+
+  // Adiciona texto ao <p>
+  const textoLi = document.createTextNode(texto);
+  novoP.appendChild(textoLi);
+
+  // Adiciona o <p> ao <li>
+  novaLi.appendChild(novoP);
+
+  // Obtém a lista ordenada
+  const lista = document.querySelector('.chat-principal-conversa');
+
+  // Insere o <li> na lista ordenada
+  lista.appendChild(novaLi);
+}
+
+function adicionarLiAssistente(texto){
+  // Cria um elemento <li>
+  const novaLi = document.createElement('li');
+  const novoP = document.createElement('p');
+
+  novaLi.classList.add("liAssistente")
+  novoP.classList.add("pAssistente")
+
   // Adiciona texto ao <p>
   const textoLi = document.createTextNode(texto);
   novoP.appendChild(textoLi);
@@ -442,23 +466,42 @@ formularioPadrao.addEventListener("submit", () => {
   // Adiciona o Texto ao chat
   adicionarLi(chatTexto.value);
 
-  // adiciona o Texto ao objeto curriculo
-  curriculo[camposCurriculo[etapaMensagem]] = chatTexto.value;
+  switch(etapaMensagem){
+    case 0:
+      cur.setNomeSobrenome(chatTexto.value)
+      break
+    case 1:
+      cur.setNumTelefone(chatTexto.value)
+      break
+    case 2:
+      cur.setEmail(chatTexto.value)
+      break
+    case 3:
+      cur.setBairro(chatTexto.value)
+      break
+    case 4:
+      cur.setCidade(chatTexto.value)
+      break
+    case 5:
+      cur.setEstado(chatTexto.value)
+      break
+    case 6:
+      cur.setCep(chatTexto.value)
+      formularioPadrao.style.display = "none";
+      formularioExperiencia.style.display = "grid";
+      break
+
+  }
 
   //Atualiza o Curriculo com os dados do objeto
-  atualizarCurriculo(curriculo);
+  atualizarCurriculo(cur);
 
   chatTexto.value = "";
   etapaMensagem += 1;
 
   //envia texto da assistente
-  adicionarLi(mensagens[etapaMensagem]);
+  adicionarLiAssistente(mensagens[etapaMensagem]);
 
-  // Troca o Forms Para o de Experiencias Profissionais
-  if (etapaMensagem == 7) {
-    formularioPadrao.style.display = "none";
-    formularioExperiencia.style.display = "grid";
-  }
 
   scrollDown()
 })
@@ -469,12 +512,12 @@ formularioPadrao.addEventListener("submit", () => {
 botaoAdicionarExperiencia.addEventListener("click", () => {
   event.preventDefault()
 
-  adicionarExperiencia(curriculo)
-  adicionarExperienciaModelo(curriculo)
-  atualizarCurriculo(curriculo) // talvez n precise estar aqui
+  adicionarExperiencia(cur)
+  adicionarExperienciaModelo(cur)
+  atualizarCurriculo(cur) // talvez n precise estar aqui
 
   adicionarLi("funcao: " + cargo.value + " empresa: " + empresa.value + " descricao: " + descricao.value);
-  adicionarLi("otimo tem mais alguma experiencia para adicionar?")
+  adicionarLiAssistente("Mais Alguma Experiencia?")
 
   cargo.value = "";
   empresa.value = "";
@@ -485,7 +528,7 @@ botaoAdicionarExperiencia.addEventListener("click", () => {
 });
 
 botaoAvancarExperiencia.addEventListener("click", () => {
-  adicionarLi("adicione uma habilidade");
+  adicionarLiAssistente("Vamos para suas Habilidades");
   formularioExperiencia.style.display = "none";
   formularioFormacao.style.display = "flex";
 
@@ -497,19 +540,18 @@ formularioHabilidades.addEventListener("submit", () => {
   // Adiciona o Texto ao chat
   adicionarLi(inputHabilidades.value);
 
-  adicionarHabilidades(curriculo)
-  adicionarHabilidadesModelo(curriculo)
-  atualizarCurriculo(curriculo) // talvez n precise estar aqui
+  adicionarHabilidades(cur)
+  adicionarHabilidadesModelo(cur)
+  atualizarCurriculo(cur) // talvez n precise estar aqui
 
-  adicionarLi("tem mais alguma habilidade?")
-  console.log(curriculo)
+  adicionarLiAssistente("tem mais alguma habilidade?")
 
   scrollDown()
 })
 
 buttonAvancarHabilidades.addEventListener("click", () => {
   // Adiciona o Texto ao chat
-  adicionarLi("digite uma formacao");
+  adicionarLiAssistente("digite uma formacao");
   formularioHabilidades.style.display = "none";
   formularioFormacao.style.display = "none";
 
@@ -518,10 +560,10 @@ buttonAvancarHabilidades.addEventListener("click", () => {
 formularioFormacao.addEventListener("submit", () => {
   event.preventDefault()
 
-  adicionarFormacao(curriculo)
-  adicionarFormacaoModelo(curriculo)
+  adicionarFormacao(cur)
+  adicionarFormacaoModelo(cur)
   adicionarLi(inputFormacao.value + " " + selectEstado.value);
-  adicionarLi("adicione mais uma formacao");
+  adicionarLiAssistente("adicione mais uma formacao");
 
   scrollDown()
 })

@@ -44,28 +44,27 @@
   min-width: 400px;
   height: 100%;
   text-align: center;
-  background: #ffff;
-  border-radius: 20px;
   padding: 5px 5px 5px 5px;
   margin: 20px 140px 50px 140px;
 }
 
-.chat-principal-conversa li:nth-child(odd){
-  justify-content: flex-start;
-}
-
-/* Aplicar css de 2 em 2 mensagens, equivalentes a resposta do usuário */
-.chat-principal-conversa li:nth-child(even){
+.liUsuario{
   color: green;
   justify-content: flex-end;
 }
 
-.chat-principal-conversa li:nth-child(odd) p{
-  border-radius: 20px 20px 20px 0px;
+.pUsuario{
+  background: #ffff;
+  border-radius: 20px 20px 0 20px;
 }
 
-.chat-principal-conversa li:nth-child(even) p{  
-  border-radius: 20px 20px 0 20px;
+.liAssistente{
+  justify-content: flex-start;
+}
+
+.pAssistente{
+  background: #ffff;
+  border-radius: 20px 20px 20px 0px;
 }
 
 #formulario-padrao{
