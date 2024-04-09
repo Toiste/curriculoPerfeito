@@ -20,7 +20,7 @@ const cep = document.getElementById("cep");
 
 // dados Experiencia
 const experiencia = document.getElementById("experiencia-profissional");
-const experiencias = document.querySelectorAll("#experiencia-profissional p")
+
 // inputs Experiencia
 const cargo = document.getElementById("chat-escrita-cargo");
 const empresa = document.getElementById("chat-escrita-empresa");
@@ -34,7 +34,6 @@ const descricao = document.getElementById("descricao-currilo")
 const formularioHabilidades = document.getElementById("formulario-habilidades");
 
 //dados Habilidades
-const habilidades = document.querySelectorAll(".habilidades p");
 const habilidadesModelo = document.getElementById("habilidades");
 
 //Input Habilidades
@@ -194,7 +193,7 @@ class Experiencia {
   }
 
   getEmpresa() {
-    return this.Empresa
+    return this.empresa
   }
 
   setEmpresa(empresa) {
@@ -288,25 +287,7 @@ for (let ano = anoAtual; ano >= anoAtual - limiteIdade; ano--) {
 }
 
 function adicionarExperiencia(object) {
-  object.experiencia.push({
-    funcao: cargo.value,
-    empresa: empresa.value,
-    data_inicio: [inicioMes.value, inicioAno.value],
-    data_fim: [fimMes.value, fimAno.value],
-    descricao: descricao.value,
-  })
-}
-
-function adicionarExperienciaModelo(object) {
-  // a partir da quantidade já adicionada de experiencias ele adiciona as restantes
-  for (experienciasAdicionadas; experienciasAdicionadas < object.experiencia.length; experienciasAdicionadas++) {
-    let novaExperiencia = document.createElement("p");
-    novaExperiencia.textContent = object.experiencia[experienciasAdicionadas].funcao + " , " + object.experiencia[experienciasAdicionadas].empresa +
-      " - ( " + object.experiencia[experienciasAdicionadas].data_inicio[0] + " " + object.experiencia[experienciasAdicionadas].data_inicio[1] + " / " + object.experiencia[experienciasAdicionadas].data_fim[0] + " " +
-      object.experiencia[experienciasAdicionadas].data_fim[1] + " )"
-
-    experiencia.appendChild(novaExperiencia);
-  }
+  object.addExperiencia(cargo.value,empresa.value,descricao.value,inicioMes.value, inicioAno.value,fimMes.value,fimAno.value)
 }
 
 function adicionarHabilidades(object) {
@@ -375,20 +356,69 @@ function atualizarCurriculo(object) {
   cep.textContent = object.cep;
 
   if (object.experiencia.length > 0) {
-    let i = 0
+    const experiencias = document.querySelectorAll("#experiencia-profissional div")
+
     experiencias.forEach(elemento => {
-      elemento.textContent = object.experiencia[i].funcao + " , " + object.experiencia[i].empresa +
-        " - ( " + object.experiencia[i].data_inicio[0] + " " + object.experiencia[i].data_inicio[1] + " / " + object.experiencia[i].data_fim[0] + " " +
-        object.experiencia[i].data_fim[1] + " )"
-      i++
+      if(elemento != null){
+        elemento.parentElement.removeChild(elemento)
+      }
     });
+    for(let i = 0; i < object.experiencia.length; i++){
+      console.log("entrei")
+      const novaExp = document.createElement("div")
+      const novoCargo = document.createElement("p");
+      const novaEmpresa = document.createElement("p");
+      const novoMesInicio = document.createElement("p");
+      const novoAnoInicio = document.createElement("p");
+      const novoMesFim = document.createElement("p");
+      const novoAnoFim = document.createElement("p")
+      const novaDescricao = document.createElement("p")
+
+      console.log(object.getExperiencia(i).getCargo())
+
+      novoCargo.textContent = object.getExperiencia(i).getCargo()
+      novaEmpresa.textContent = object.getExperiencia(i).getEmpresa()
+      novoMesInicio.textContent = object.getExperiencia(i).getMesInicio()
+      novoAnoInicio.textContent = object.getExperiencia(i).getAnoInicio()
+      novoMesFim.textContent = object.getExperiencia(i).getMesFim()
+      novoAnoFim.textContent = object.getExperiencia(i).getAnoFim()
+      novaDescricao.textContent = object.getExperiencia(i).getDescricao()
+     
+
+      experiencia.appendChild(novaExp)
+      novaExp.appendChild(novoCargo)
+      novaExp.appendChild(novaEmpresa)
+      novaExp.appendChild(novoMesInicio)
+      novaExp.appendChild(novoAnoInicio)
+      novaExp.appendChild(novoMesFim)
+      novaExp.appendChild(novoAnoFim)
+      novaExp.appendChild(novaDescricao)
+
+    }
+  }
+
+  // terminar isso aqui
+  if(object.formacao.length > 0){
+    const formacoes = document.querySelectorAll("#formacoes div");
+
+    formacoes.forEach(elemento => {
+      if( elemento != null){
+        elemento.parentElement.removeChild(elemento)
+      }
+    })
   }
   if (object.habilidade.length > 0) {
-    let i = 0
+    const habilidades = document.querySelectorAll(".habilidades div");
+
     habilidades.forEach(elemento => {
-      elemento.textContent = object.habilidade[i]
-      i++
+      if( elemento != null){
+        elemento.parentElement.removeChild(elemento)
+      }
     });
+
+    for(let i = 0 ; i < object.habilidade.length; i++){
+      elemento.textContent = object.habilidade[i]
+    }
   }
 
 }
@@ -513,9 +543,8 @@ botaoAdicionarExperiencia.addEventListener("click", () => {
   event.preventDefault()
 
   adicionarExperiencia(cur)
-  adicionarExperienciaModelo(cur)
   atualizarCurriculo(cur) // talvez n precise estar aqui
-
+  console.log("passei")
   adicionarLi("funcao: " + cargo.value + " empresa: " + empresa.value + " descricao: " + descricao.value);
   adicionarLiAssistente("Mais Alguma Experiencia?")
 
@@ -528,32 +557,10 @@ botaoAdicionarExperiencia.addEventListener("click", () => {
 });
 
 botaoAvancarExperiencia.addEventListener("click", () => {
-  adicionarLiAssistente("Vamos para suas Habilidades");
+  adicionarLi("avançar para próxima pergunta")
+  adicionarLiAssistente("Vamos para suas formações");
   formularioExperiencia.style.display = "none";
   formularioFormacao.style.display = "flex";
-
-})
-
-formularioHabilidades.addEventListener("submit", () => {
-  event.preventDefault()
-
-  // Adiciona o Texto ao chat
-  adicionarLi(inputHabilidades.value);
-
-  adicionarHabilidades(cur)
-  adicionarHabilidadesModelo(cur)
-  atualizarCurriculo(cur) // talvez n precise estar aqui
-
-  adicionarLiAssistente("tem mais alguma habilidade?")
-
-  scrollDown()
-})
-
-buttonAvancarHabilidades.addEventListener("click", () => {
-  // Adiciona o Texto ao chat
-  adicionarLiAssistente("digite uma formacao");
-  formularioHabilidades.style.display = "none";
-  formularioFormacao.style.display = "none";
 
 })
 
@@ -566,4 +573,27 @@ formularioFormacao.addEventListener("submit", () => {
   adicionarLiAssistente("adicione mais uma formacao");
 
   scrollDown()
+})
+
+formularioHabilidades.addEventListener("submit", () => {
+  event.preventDefault()
+
+  // Adiciona o Texto ao chat
+  adicionarLi(inputHabilidades.value);
+
+  adicionarHabilidades(cur)
+  adicionarHabilidadesModelo(cur)
+  atualizarCurriculo(cur) // talvez n precise estar aqui
+
+  adicionarLiAssistente("tem mais alguma Habilidade?")
+
+  scrollDown()
+})
+
+buttonAvancarHabilidades.addEventListener("click", () => {
+  // Adiciona o Texto ao chat
+  adicionarLiAssistente("digite uma formacao");
+  formularioHabilidades.style.display = "none";
+  formularioFormacao.style.display = "none";
+
 })
