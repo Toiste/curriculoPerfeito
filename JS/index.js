@@ -47,8 +47,7 @@ const buttonAvancarHabilidades = document.getElementById("formulario-habilidades
 const formularioFormacao = document.getElementById("formulario-formacao")
 
 // dados Formacao
-const formacao = document.querySelectorAll(".formacao p")
-const formacaoModelo = document.getElementById("formacao");
+const formacao = document.getElementById("formacao");
 
 // input formacao
 const inputFormacao = document.getElementById("formulario-formacao-input-envio");
@@ -173,7 +172,22 @@ class Curriculo {
     this.habilidade.splice(indice, 1)
   }
 
+  addFormacao(curso, estado){
+    const novaFormacao = new Formacao(curso,estado)
+    this.formacao.push(novaFormacao);
+  }
 
+  getFormacao(indice){
+    return this.formacao[indice]
+  }
+
+  setFormacao(indice, formacao){
+    this.formacao[indice] = formacao
+  }
+
+  removeFormacao(indice){
+    this.formacao.splice(indice, 1)
+  }
 }
 
 class Experiencia {
@@ -242,9 +256,25 @@ class Experiencia {
 }
 
 class Formacao {
-  constructor(formacao, estado) {
-    this.formacao = formacao;
+  constructor(curso, estado) {
+    this.curso = curso;
     this.estado = estado;
+  }
+
+  getCurso(){
+    return this.curso
+  }
+
+  setCurso(curso){
+    this.curso = curso
+  }
+
+  getEstado(){
+    return this.estado
+  }
+
+  setEstado(estado){
+    this.estado = estado
   }
 }
 
@@ -304,20 +334,9 @@ function adicionarHabilidadesModelo(object) {
 }
 
 function adicionarFormacao(object) {
-  object.formacao.push({
-    formacao: inputFormacao.value,
-    estado: selectEstado.value,
-  });
+  object.addFormacao(inputFormacao.value, selectEstado.value)
 }
 
-function adicionarFormacaoModelo(object) {
-  for (formacaoAdicionadas; formacaoAdicionadas < object.formacao.length; formacaoAdicionadas++) {
-    let novaFormacao = document.createElement("p");
-    novaFormacao.textContent = object.formacao[formacaoAdicionadas].formacao + " - " + object.formacao[formacaoAdicionadas].estado
-    formacaoModelo.appendChild(novaFormacao);
-
-  }
-}
 function scrollDown() {
   var container = document.querySelector(".chat-principal-exibicao");
   container.scrollTop = container.scrollHeight;
@@ -364,7 +383,6 @@ function atualizarCurriculo(object) {
       }
     });
     for(let i = 0; i < object.experiencia.length; i++){
-      console.log("entrei")
       const novaExp = document.createElement("div")
       const novoCargo = document.createElement("p");
       const novaEmpresa = document.createElement("p");
@@ -373,8 +391,6 @@ function atualizarCurriculo(object) {
       const novoMesFim = document.createElement("p");
       const novoAnoFim = document.createElement("p")
       const novaDescricao = document.createElement("p")
-
-      console.log(object.getExperiencia(i).getCargo())
 
       novoCargo.textContent = object.getExperiencia(i).getCargo()
       novaEmpresa.textContent = object.getExperiencia(i).getEmpresa()
@@ -397,15 +413,30 @@ function atualizarCurriculo(object) {
     }
   }
 
-  // terminar isso aqui
   if(object.formacao.length > 0){
-    const formacoes = document.querySelectorAll("#formacoes div");
+    console.log("entrei")
+    const formacoes = document.querySelectorAll("#formacao div");
 
     formacoes.forEach(elemento => {
       if( elemento != null){
         elemento.parentElement.removeChild(elemento)
       }
     })
+    for(let i = 0; i < object.formacao.length; i++){
+      console.log("entrei")
+      const novaFormacao = document.createElement("div")
+      const novoCurso = document.createElement("p");
+      const novoEstado = document.createElement("p");
+
+      novoCurso.textContent = object.getFormacao(i).getCurso()
+      novoEstado.textContent = object.getFormacao(i).getEstado()
+
+      novaFormacao.appendChild(novoCurso)
+      novaFormacao.appendChild(novoEstado)
+      formacao.appendChild(novaFormacao)
+    }
+    
+  // terminar isso aqui
   }
   if (object.habilidade.length > 0) {
     const habilidades = document.querySelectorAll(".habilidades div");
@@ -568,7 +599,7 @@ formularioFormacao.addEventListener("submit", () => {
   event.preventDefault()
 
   adicionarFormacao(cur)
-  adicionarFormacaoModelo(cur)
+  atualizarCurriculo(cur)
   adicionarLi(inputFormacao.value + " " + selectEstado.value);
   adicionarLiAssistente("adicione mais uma formacao");
 
