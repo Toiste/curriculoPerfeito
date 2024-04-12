@@ -51,16 +51,11 @@ const formacao = document.getElementById("formacao");
 
 // input formacao
 const inputFormacao = document.getElementById("formulario-formacao-input-envio");
+const botaoformacao = document.getElementById("formulario-formacao-button")
+const botaoAvancarFormacao = document.getElementById("formulario-formacao-button-avancar")
 
 // select formacao
 const selectEstado = document.getElementById("estado-formacao");
-
-
-
-// Variaveis de controle
-let experienciasAdicionadas = 0;
-let habilidadesAdicionadas = 0
-let formacaoAdicionadas = 0
 
 // Configurações do PDF
 const opcoes = {
@@ -280,17 +275,6 @@ class Formacao {
 
 const cur = new Curriculo()
 
-// Mapeamento entre etapas do formulário e campos do currículo
-const camposCurriculo = [
-  "nomeSobrenome",
-  "numTelefone",
-  "email",
-  "bairro",
-  "cidade",
-  "estado",
-  "cep",
-];
-
 // Obter o ano atual
 let anoAtual = new Date().getFullYear();
 
@@ -322,15 +306,6 @@ function adicionarExperiencia(object) {
 
 function adicionarHabilidades(object) {
   object.habilidades.push(inputHabilidades.value)
-}
-
-function adicionarHabilidadesModelo(object) {
-  for (habilidadesAdicionadas; habilidadesAdicionadas < object.habilidades.length; habilidadesAdicionadas++) {
-    let novaHabilidade = document.createElement("p");
-    novaHabilidade.textContent = object.habilidades[habilidadesAdicionadas]
-    console.log("cheguei aqui")
-    habilidadesModelo.appendChild(novaHabilidade);
-  }
 }
 
 function adicionarFormacao(object) {
@@ -451,25 +426,6 @@ function atualizarCurriculo(object) {
       elemento.textContent = object.habilidade[i]
     }
   }
-
-}
-
-
-function adicionaTexto(texto, elemento) {
-  const mensagem = document.createTextNode(texto);
-  elemento.appendChild(mensagem);
-}
-
-
-// a resposta do usuário e a tag que vai querer criar, por exemplo "p"
-function criarElementoCurriculo(resposta, tag, elemento) {
-  const novoElemento = document.createElement(tag);
-
-  // Adiciona a resposta ao elemento
-  adicionaTexto(resposta, novoElemento);
-
-  // Adciona o elemento ao Curriculo
-  elemento.appendChild(novoElemento);
 
 }
 
@@ -604,6 +560,11 @@ formularioFormacao.addEventListener("submit", () => {
   adicionarLiAssistente("adicione mais uma formacao");
 
   scrollDown()
+})
+
+botaoAvancarFormacao.addEventListener("click", ()=>{
+  formularioFormacao.style.display = "none";
+  formularioHabilidades.style.display = "flex";
 })
 
 formularioHabilidades.addEventListener("submit", () => {
